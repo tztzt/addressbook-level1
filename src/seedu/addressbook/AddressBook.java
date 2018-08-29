@@ -114,7 +114,7 @@ public class AddressBook {
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_LIST_DESC = "Displays all persons as a list with index numbers.";
     private static final String COMMAND_LIST_EXAMPLE = COMMAND_LIST_WORD;
-    private static final String COMMAND_LIST_ERROR = "Error: list command requires no parameters.";
+    private static final String COMMAND_LIST_ERROR = "Invalid command format: list" + LS + "List does not require any parameters.";
 
     private static final String COMMAND_DELETE_WORD = "delete";
     private static final String COMMAND_DELETE_DESC = "Deletes a person identified by the index number used in "
@@ -574,12 +574,15 @@ public class AddressBook {
      *
      * Enhancement - Week 3: Validate there is no additional dummy input after list command
      *
-     * @return feedback display message for the operation result if command input is appropriate with no redundant arguments
+     * @return feedback display message for the operation result if command input is appropriate with no redundant input
      */
     private static String executeListAllPersonsInAddressBook(String commandArgs) {
         ArrayList<String[]> toBeDisplayed = getAllPersonsInAddressBook();
+        if (!isCommandValid(commandArgs)) {
+            return String.format(COMMAND_LIST_ERROR);
+        }
         showToUser(toBeDisplayed);
-        return isCommandValid(commandArgs) ? getMessageForPersonsDisplayedSummary(toBeDisplayed) : COMMAND_LIST_ERROR;
+        return getMessageForPersonsDisplayedSummary(toBeDisplayed);
     }
 
     /**
